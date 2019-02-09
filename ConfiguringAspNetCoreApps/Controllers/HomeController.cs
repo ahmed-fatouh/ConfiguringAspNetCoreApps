@@ -16,8 +16,10 @@ namespace ConfiguringAspNetCoreApps.Controllers
             timer = _timer;
         }
 
-        public ViewResult Index()
+        public ViewResult Index(bool throwException = false)
         {
+            if (throwException)
+                throw new NullReferenceException("Null exception as you set throwException true");
             Dictionary<string, string> details = new Dictionary<string, string>()
             {
                 ["Message"] = "This is the Index action",
@@ -25,6 +27,12 @@ namespace ConfiguringAspNetCoreApps.Controllers
             };
             return View(details);
         }
+
+        public ViewResult Error() =>
+            View("Index", new Dictionary<string, string>()
+            {
+                ["Message"] = "This is the Error action"
+            });
 
 
     }
