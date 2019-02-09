@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace ConfiguringAspNetCoreApps.Infrastructure
 {
-    public class ShortCircuitMiddleware
+    public class BrowserTypeMiddleware
     {
         private RequestDelegate nextDelegate;
 
-        public ShortCircuitMiddleware(RequestDelegate next)
+        public BrowserTypeMiddleware(RequestDelegate next)
         {
             nextDelegate = next;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Items["EdgeBrowser"] as bool? == true)
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            }
-            else
-            {
-                await nextDelegate.Invoke(context);
-            }
+            context.Items["EdgeBrowser"] = context.Request
+                                           .Headers["User-Agent"]
+                                           .Any(h => h.ToLower().Contains("edge"));
+            await nextDelegate.Invoke(context);
         }
     }
 }
