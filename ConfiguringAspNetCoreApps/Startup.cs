@@ -17,7 +17,7 @@ namespace ConfiguringAspNetCoreApps
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<UpTimeService>();
-            //services.AddMvc();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,7 +27,10 @@ namespace ConfiguringAspNetCoreApps
             app.UseMiddleware<BrowserTypeMiddleware>();
             app.UseMiddleware<ShortCircuitMiddleware>();
             app.UseMiddleware<ContentMiddleware>();
-            //app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(route =>
+                route.MapRoute(name: "default",
+                               template: "{controller=Home}/{action=Index}/{id?}"));
         }
     }
 }
