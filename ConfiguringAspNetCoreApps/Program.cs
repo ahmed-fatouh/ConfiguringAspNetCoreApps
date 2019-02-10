@@ -35,6 +35,8 @@ namespace ConfiguringAspNetCoreApps
                 logging.AddDebug();
             })
             .UseIISIntegration()
+            .UseDefaultServiceProvider((context, opts) =>
+                opts.ValidateScopes = context.HostingEnvironment.IsDevelopment())
             .UseStartup<Startup>()
             .Build();
     }
