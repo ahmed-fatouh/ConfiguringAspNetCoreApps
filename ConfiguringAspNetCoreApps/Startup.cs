@@ -28,12 +28,6 @@ namespace ConfiguringAspNetCoreApps
             services.AddMvc(opts => opts.RespectBrowserAcceptHeader = true);
         }
 
-        public void ConfigureDevelopmentServices(IServiceCollection services)
-        {
-            services.AddSingleton<UpTimeService>();
-            services.AddMvc();
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -49,14 +43,6 @@ namespace ConfiguringAspNetCoreApps
             app.UseMvc(route =>
                 route.MapRoute(name: "default",
                                template: "{controller=Home}/{action=Index}/{id?}"));
-        }
-
-        public void ConfigureDevelopment(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseStatusCodePages();
-            app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
         }
     }
 }

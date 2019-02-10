@@ -39,7 +39,7 @@ namespace ConfiguringAspNetCoreApps
             .UseIISIntegration()
             .UseDefaultServiceProvider((context, opts) =>
                 opts.ValidateScopes = context.HostingEnvironment.IsDevelopment())
-            .UseStartup<Startup>()
+            .UseStartup(nameof(ConfiguringAspNetCoreApps))
             .Build();
     }
 }
