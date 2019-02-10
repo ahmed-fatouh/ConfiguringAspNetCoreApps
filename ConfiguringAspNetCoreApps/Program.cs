@@ -24,6 +24,8 @@ namespace ConfiguringAspNetCoreApps
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                string envName = hostingContext.HostingEnvironment.EnvironmentName;
+                config.AddJsonFile($"appsettings.{envName}.json", optional: true, reloadOnChange: true);
                 config.AddEnvironmentVariables();
                 if (args != null)
                     config.AddCommandLine(args);
